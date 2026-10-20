@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Search and sort a sample people data table using JavaScript.">
+  <title>Data Table - My Website</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .table-controls { display: grid; gap: 12px; margin-bottom: 18px; }
+    .table-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .table-actions button { width: auto; }
+    #resultCount { color: var(--muted); margin: 0 0 12px; }
+    .empty-cell { text-align: center; color: var(--muted); }
+    @media (min-width: 600px) {
+      .table-controls { grid-template-columns: 1fr auto; align-items: end; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="logo" href="Home.html">Mohamed's Website</a>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li><a href="components.html">Components</a></li>
+        <li><a href="validation.html">Registration</a></li>
+        <li><a href="data.html" aria-current="page">Data Table</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <h1>People Data Table</h1>
+      <p>This page displays an array of JavaScript objects. Search as you type or sort the results by name or age.</p>
+    </section>
+
+    <section class="card" aria-labelledby="people-heading">
+      <h2 id="people-heading">People</h2>
+      <div class="table-controls">
+        <div class="form-field">
+          <label for="searchBox">Search people</label>
+          <input type="search" id="searchBox" placeholder="Search by name, age, or city..." autocomplete="off">
+        </div>
+        <div class="table-actions">
+          <button type="button" id="sortName">Sort by Name</button>
+          <button type="button" id="sortAge">Sort by Age</button>
+          <button type="button" id="resetTable" class="btn-outline">Reset</button>
+        </div>
+      </div>
+
+      <p id="resultCount" aria-live="polite"></p>
+      <div class="table-wrap">
+        <table>
+          <caption class="help-text" style="text-align:left;padding:12px 16px;">Sample people and their details</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">City</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 My Website. All rights reserved.</p></div></footer>
+
+  <script>
+    // The source data: an array of objects.
+    const people = [
+      { name: "Mohamed", age: 21, city: "Cairo" },
+      { name: "Ahmed", age: 25, city: "Giza" },
+      { name: "Sara", age: 22, city: "Alexandria" },
+      { name: "Mariam", age: 19, city: "Cairo" },
+      { name: "Omar", age: 28, city: "Giza" },
+      { name: "Youssef", age: 24, city: "Mansoura" }
+    ];
+
+    const tableBody = document.getElementById("tableBody");
+    const searchBox = document.getElementById("searchBox");
+    const resultCount = document.getElementById("resultCount");
+
+    let displayedPeople = [...people];
+    let sortMode = "";
+
+    function renderTable(data) {
+      tableBody.replaceChildren();
+      resultCount.textContent = "Showing " + data.length + " of " + people.length + " people.";
+
+      if (data.length === 0) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 3;
+        cell.className = "empty-cell";
+        cell.textContent = "No results found. Try another search.";
+        row.appendChild(cell);
+        tableBody.appendChild(row);
+        return;
+      }
+
+      data.forEach(function(person) {
+        const row = document.createElement("tr");
+
+        // textContent safely inserts text into each cell.
+        [person.name, person.age, person.city].forEach(function(value) {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+
+        tableBody.appendChild(row);
+      });
+    }
+
+    function updateTable() {
+      const query = searchBox.value.trim().toLowerCase();
+
+      displayedPeople = people.filter(function(person) {
+        return person.name.toLowerCase().includes(query) ||
+          String(person.age).includes(query) ||
+          person.city.toLowerCase().includes(query);
+      });
+
+      if (sortMode === "name") {
+        displayedPeople.sort(function(a, b) {
+          return a.name.localeCompare(b.name);
+        });
+      } else if (sortMode === "age") {
+        displayedPeople.sort(function(a, b) {
+          return a.age - b.age;
+        });
+      }
+
+      renderTable(displayedPeople);
+    }
+
+    searchBox.addEventListener("input", updateTable);
+
+    document.getElementById("sortName").addEventListener("click", function() {
+      sortMode = "name";
+      updateTable();
+    });
+
+    document.getElementById("sortAge").addEventListener("click", function() {
+      sortMode = "age";
+      updateTable();
+    });
+
+    document.getElementById("resetTable").addEventListener("click", function() {
+      searchBox.value = "";
+      sortMode = "";
+      updateTable();
+      searchBox.focus();
+    });
+
+    renderTable(displayedPeople);
+  </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Registration form with JavaScript validation.">
+  <title>Registration - My Website</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .field-error { color: var(--error-text); font-size: .9rem; margin: 0; }
+    .field-error:empty { display: none; }
+    .input-invalid { border-color: #dc2626; }
+    .form-card { max-width: 680px; }
+    .form-note { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="logo" href="Home.html">Mohamed's Website</a>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li><a href="components.html">Components</a></li>
+        <li><a href="validation.html" aria-current="page">Registration</a></li>
+        <li><a href="data.html">Data Table</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <h1>Registration Form</h1>
+      <p>Enter your details below. JavaScript will check each field before accepting the form.</p>
+    </section>
+
+    <section class="card form-card" aria-labelledby="form-heading">
+      <h2 id="form-heading">Create an account</h2>
+      <p class="form-note">All fields are required.</p>
+
+      <form id="registrationForm" novalidate>
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" aria-describedby="nameError">
+          <p class="field-error" id="nameError" aria-live="polite"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" aria-describedby="emailError">
+          <p class="field-error" id="emailError" aria-live="polite"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="new-password" aria-describedby="passwordError">
+          <p class="field-error" id="passwordError" aria-live="polite"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="confirmPassword">Confirm password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" aria-describedby="confirmPasswordError">
+          <p class="field-error" id="confirmPasswordError" aria-live="polite"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" min="1" max="120" step="1" aria-describedby="ageError">
+          <p class="field-error" id="ageError" aria-live="polite"></p>
+        </div>
+
+        <button type="submit">Register</button>
+        <div id="formMessage" class="alert" role="status" aria-live="polite" hidden></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 My Website. All rights reserved.</p></div></footer>
+
+  <script>
+    const registrationForm = document.getElementById("registrationForm");
+
+    const fields = {
+      name: document.getElementById("name"),
+      email: document.getElementById("email"),
+      password: document.getElementById("password"),
+      confirmPassword: document.getElementById("confirmPassword"),
+      age: document.getElementById("age")
+    };
+
+    const formMessage = document.getElementById("formMessage");
+
+    function showError(fieldName, message) {
+      document.getElementById(fieldName + "Error").textContent = message;
+      fields[fieldName].classList.toggle("input-invalid", Boolean(message));
+      fields[fieldName].setAttribute("aria-invalid", message ? "true" : "false");
+    }
+
+    function validateForm() {
+      let valid = true;
+      const name = fields.name.value.trim();
+      const email = fields.email.value.trim();
+      const password = fields.password.value;
+      const confirmPassword = fields.confirmPassword.value;
+      const ageText = fields.age.value.trim();
+      const age = Number(ageText);
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      Object.keys(fields).forEach(function(key) {
+        showError(key, "");
+      });
+      formMessage.hidden = true;
+      formMessage.textContent = "";
+      formMessage.className = "alert";
+
+      if (!name) {
+        showError("name", "Name is required.");
+        valid = false;
+      }
+
+      if (!email) {
+        showError("email", "Email is required.");
+        valid = false;
+      } else if (!emailPattern.test(email)) {
+        showError("email", "Please enter a valid email address.");
+        valid = false;
+      }
+
+      if (!password) {
+        showError("password", "Password is required.");
+        valid = false;
+      } else if (password.length < 8) {
+        showError("password", "Password must be at least 8 characters.");
+        valid = false;
+      }
+
+      if (!confirmPassword) {
+        showError("confirmPassword", "Please confirm your password.");
+        valid = false;
+      } else if (password !== confirmPassword) {
+        showError("confirmPassword", "Passwords do not match.");
+        valid = false;
+      }
+
+      if (!ageText) {
+        showError("age", "Age is required.");
+        valid = false;
+      } else if (!Number.isInteger(age) || age < 1 || age > 120) {
+        showError("age", "Age must be a whole number between 1 and 120.");
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    registrationForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (!validateForm()) {
+        formMessage.hidden = false;
+        formMessage.classList.add("alert-error");
+        formMessage.textContent = "Please correct the errors above before continuing.";
+        const firstInvalid = registrationForm.querySelector('[aria-invalid="true"]');
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      formMessage.hidden = false;
+      formMessage.classList.add("alert-success");
+      formMessage.textContent = "Registration successful! This demo does not send data to a server.";
+    });
+
+    Object.keys(fields).forEach(function(key) {
+      fields[key].addEventListener("input", function() {
+        // Re-check the form as the user edits fields after submitting.
+        if (document.getElementById(key + "Error").textContent) {
+          validateForm();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

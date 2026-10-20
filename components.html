@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Reusable responsive components, form controls, alerts, and a CSS-only modal demo.">
+  <title>Components - My Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="logo" href="Home.html">My Website</a>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li><a href="components.html" aria-current="page">Components</a></li>
+        <li><a href="validation.html">Registration</a></li>
+        <li><a href="data.html">Data Table</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero">
+      <h1>Component Library</h1>
+      <p>Reusable components styled to match the website. Resize the browser to see the responsive layout. Dark mode follows your device's appearance setting.</p>
+    </section>
+    <section class="section">
+      <h2>Responsive Cards</h2>
+      <div class="grid">
+        <article class="card"><h3>Flexible navigation</h3><p>The header uses Flexbox to keep the logo and navigation neatly arranged.</p></article>
+        <article class="card"><h3>Responsive grid</h3><p>Cards display in one column on small screens, two on tablets, and three on desktops.</p></article>
+        <article class="card"><h3>Accessible focus</h3><p>Use the Tab key to navigate. Focused links and controls have a visible outline.</p></article>
+      </div>
+    </section>
+    <section class="section">
+      <h2>Form Elements</h2>
+      <div class="card">
+        <form action="#" method="get">
+          <div class="form-field">
+            <label for="demo-name">Name</label>
+            <input type="text" id="demo-name" name="demo-name" placeholder="Enter your name">
+          </div>
+          <div class="form-field">
+            <label for="demo-email">Email</label>
+            <input type="email" id="demo-email" name="demo-email" placeholder="you@example.com">
+          </div>
+          <div class="form-field">
+            <label for="demo-topic">Choose a topic</label>
+            <select id="demo-topic" name="demo-topic">
+              <option value="">Select one option</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="accessibility">Accessibility</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="demo-message">Message</label>
+            <textarea id="demo-message" name="demo-message" rows="3" placeholder="Write a message"></textarea>
+          </div>
+          <div class="row">
+            <button type="submit">Submit Example</button>
+            <button class="btn-outline" type="reset">Reset</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="section">
+      <h2>Alerts / Notifications</h2>
+      <div class="alert alert-success" role="status"><strong>Success:</strong> Your changes have been saved.</div>
+      <div class="alert alert-error" role="alert"><strong>Error:</strong> Please check the information and try again.</div>
+    </section>
+    <section class="section">
+      <h2>CSS-only Modal Window</h2>
+      <p>The modal opens and closes using the CSS <code>:target</code> selector, without JavaScript.</p>
+      <a class="btn" href="#demo-modal">Open Modal</a>
+      <div class="modal" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
+        <div class="modal-content">
+          <h2 id="modal-title">Hello!</h2>
+          <p id="modal-description">This is a CSS-only modal window. No JavaScript is used.</p>
+          <a class="btn" href="#main">Close Modal</a>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <h2>Theme Colors</h2>
+      <div class="swatches">
+        <div class="swatch"><span class="swatch-color" style="background:#2563eb"></span><code>Primary: #2563eb</code></div>
+        <div class="swatch"><span class="swatch-color" style="background:#f8fafc"></span><code>Background: #f8fafc</code></div>
+        <div class="swatch"><span class="swatch-color" style="background:#1e293b"></span><code>Text: #1e293b</code></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 My Website. All rights reserved.</p></div></footer>
+</body>
+</html>

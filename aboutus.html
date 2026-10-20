@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn about our skills and course schedule.">
+  <title>About Us - My Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="logo" href="Home.html">My Website</a>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="aboutus.html" aria-current="page">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li><a href="components.html">Components</a></li>
+        <li><a href="validation.html">Registration</a></li>
+        <li><a href="data.html">Data Table</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero">
+      <h1>About Us</h1>
+      <p>This page shares the skills I am learning and a sample course schedule.</p>
+    </section>
+    <section class="grid" aria-label="About information">
+      <article class="card">
+        <h2>Our Skills</h2>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>Git</li>
+        </ul>
+      </article>
+      <section class="card">
+        <h2>Course Schedule</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="help-text" style="text-align:left;padding:12px 16px;">Current sample course schedule</caption>
+            <thead>
+              <tr><th scope="col">Course</th><th scope="col">Day</th><th scope="col">Room</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Web Basics</td><td>Monday</td><td>B12</td></tr>
+              <tr><td>Databases</td><td>Tuesday</td><td>C03</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 My Website. All rights reserved.</p></div></footer>
+</body>
+</html>
